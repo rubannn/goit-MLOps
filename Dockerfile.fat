@@ -1,0 +1,25 @@
+# "Важкий" образ на повній версії python:3.13 (без multi-stage, без оптимізацій)
+FROM python:3.13
+
+WORKDIR /app
+
+# Системні залежності
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    libjpeg-dev \
+    zlib1g-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Python-залежності
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Код
+COPY app/ ./app/
+COPY export_model.py .
+
+# Модель
+COPY model/ ./model/
+
+ENTRYPOINT ["python", "app/inference.py"]
+CMD ["example.jpg"]

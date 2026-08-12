@@ -1,0 +1,24 @@
+# Оптимізований multi-stage образ на python:3.13-slim
+
+# --- Stage 1: builder ---
+FROM python:3.13-slim AS slim-ver
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir --prefix=/install -r requirements.txt
+
+# --- Stage 2: runtime ---
+FROM python:3.13-slim
+
+WORKDIR /app
+
+# Лише встановлені Python-залежності з slim-ver-стадії
+COPY --from=slim-ver /install /usr/local
+
+# Лише потрібний код і модель (без .git, кешів, virtualenv)
+COPY app/ ./app/
+COPY model/ ./model/
+
+ENTRYPOINT ["python", "app/inference.py"]
+CMD ["example.jpg"]
