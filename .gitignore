@@ -1,3 +1,5 @@
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
@@ -32,6 +34,7 @@ MANIFEST
 *.manifest
 *.spec
 plan*
+.cla*/
 
 # Installer logs
 pip-log.txt
