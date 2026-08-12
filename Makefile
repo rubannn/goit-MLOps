@@ -18,10 +18,10 @@ build-slim:
 build: build-fat build-slim
 
 run-fat:
-	docker run --rm -v "$(CURDIR)/example.jpg:/app/example.jpg" ml-infer-fat:1.0 example.jpg
+	docker run --rm -v "$(shell cygpath -m "$(CURDIR)")/example.jpg:/app/example.jpg" ml-infer-fat:1.0 example.jpg
 
 run-slim:
-	docker run --rm -v "$(CURDIR)/example.jpg:/app/example.jpg" ml-infer-slim:1.0 example.jpg
+	docker run --rm -v "$(shell cygpath -m "$(CURDIR)")/example.jpg:/app/example.jpg" ml-infer-slim:1.0 example.jpg
 
 clean:
 	docker rmi -f ml-infer-fat:1.0 ml-infer-slim:1.0
