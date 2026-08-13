@@ -1,0 +1,22 @@
+Перевірку середовища розпочато: Wed, Aug 12, 2026  4:20:52 PM
+== Docker ==
+Docker version 29.6.2, build dfc4efb
+OK: Docker встановлено.
+== Docker Compose V2 ==
+Docker Compose version v5.3.1
+OK: Docker Compose V2 встановлено.
+== Python ==
+Знайдено Python версії: 3.13.6
+OK: версія Python >= 3.13.
+== pip ==
+pip 26.2.1 from D:\Python\GoIT\goit-MLOps\.venv\Lib\site-packages\pip (python 3.13)
+OK: pip встановлено.
+== torch ==
+OK: torch вже встановлено (версія 2.13.0+cpu).
+== torchvision ==
+OK: torchvision вже встановлено (версія 0.28.0+cpu).
+== pillow ==
+OK: pillow вже встановлено (версія 12.3.0).
+
+Перевірку середовища завершено: Wed, Aug 12, 2026  4:21:16 PM
+Детальніше дивіться у файлі install.log
