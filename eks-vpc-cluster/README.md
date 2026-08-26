@@ -6,8 +6,20 @@ Terraform-проєкт, який піднімає базову інфрастр�
 
 ```
 eks-vpc-cluster/
-├── vpc/    — VPC, public/private підмережі, NAT gateway
-└── eks/    — EKS-кластер і node group-и (бере дані про VPC через terraform_remote_state)
+├── vpc/
+│   ├── main.tf
+│   ├── variables.tf
+│   ├── outputs.tf
+│   ├── terraform.tf
+│   └── backend.tf
+├── eks/
+│   ├── main.tf
+│   ├── variables.tf
+│   ├── outputs.tf
+│   ├── terraform.tf
+│   ├── backend.tf
+│   └── data.tf
+└── README.md
 ```
 
 ## Вимоги
