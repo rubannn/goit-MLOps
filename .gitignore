@@ -222,3 +222,15 @@ __marimo__/
 
 # Claude Code
 .claude/settings.json
+
+# AWS credentials
+*_accessKeys.csv
+
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+crash.log
+crash.*.log
