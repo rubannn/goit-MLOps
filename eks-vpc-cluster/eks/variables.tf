@@ -37,7 +37,7 @@ variable "gpu_instance_types" {
 variable "cpu_desired_size" {
   description = "Desired number of nodes in the cpu-nodes group"
   type        = number
-  default     = 1
+  default     = 2
 }
 
 variable "gpu_desired_size" {

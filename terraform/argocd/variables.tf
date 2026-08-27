@@ -21,3 +21,15 @@ variable "argocd_chart_version" {
   type        = string
   default     = "7.7.11"
 }
+
+variable "gitops_repo_url" {
+  description = "URL of the GitOps repository tracked by the Argo CD ApplicationSet"
+  type        = string
+  default     = "https://github.com/rubannn/goit-MLOps-argo.git"
+}
+
+variable "gitops_repo_revision" {
+  description = "Git revision (branch) of the GitOps repository to track"
+  type        = string
+  default     = "main"
+}
