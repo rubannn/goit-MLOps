@@ -23,9 +23,9 @@ variable "cluster_version" {
 }
 
 variable "cpu_instance_types" {
-  description = "Instance types for the CPU node group. t3.micro used because the AWS Free plan only allows Free Tier-eligible on-demand instance types."
+  description = "Instance types for the CPU node group. t3.small used instead of t3.micro because t3.micro's 4-pod-per-node ENI limit is fully consumed by system daemonsets (aws-node, coredns x2, kube-proxy), leaving no room to schedule workload pods."
   type        = list(string)
-  default     = ["t3.micro"]
+  default     = ["t3.small"]
 }
 
 variable "gpu_instance_types" {
