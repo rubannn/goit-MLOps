@@ -77,3 +77,34 @@ resource "kubernetes_manifest" "gitops_applicationset" {
 
   depends_on = [helm_release.argocd]
 }
+
+resource "kubernetes_manifest" "gitops_applications" {
+  manifest = {
+    apiVersion = "argoproj.io/v1alpha1"
+    kind       = "Application"
+    metadata = {
+      name      = "gitops-applications"
+      namespace = kubernetes_namespace.argocd.metadata[0].name
+    }
+    spec = {
+      project = "default"
+      source = {
+        repoURL        = var.gitops_repo_url
+        targetRevision = var.gitops_repo_revision
+        path           = "argocd/applications"
+      }
+      destination = {
+        server    = "https://kubernetes.default.svc"
+        namespace = kubernetes_namespace.argocd.metadata[0].name
+      }
+      syncPolicy = {
+        automated = {
+          prune    = true
+          selfHeal = true
+        }
+      }
+    }
+  }
+
+  depends_on = [helm_release.argocd]
+}
