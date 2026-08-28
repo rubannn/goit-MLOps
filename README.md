@@ -133,3 +133,13 @@ kubectl get secret monitoring-stack-grafana -n monitoring -o jsonpath='{.data.ad
 | [16](img/16.png) | PushGateway — сторінка Metrics (`mlflow_accuracy`/`mlflow_loss` по всіх runs) |
 | [17](img/17.png) | Grafana → Explore → Prometheus — `mlflow_accuracy` |
 | [18](img/18.png) | Grafana → Explore → Prometheus — `mlflow_loss` |
+
+## ДЗ 5: Автоматизація тренування (AWS Step Functions + GitLab CI)
+
+Код розроблявся і застосовувався в окремому GitLab-репозиторії [mlops-train-automation](https://gitlab.com/Gh0stik/mlops-train-automation) (потрібно, бо `.gitlab-ci.yml` виконується лише на реальному GitLab-проєкті). Тут, у [mlops-train-automation/](mlops-train-automation/), — дзеркальна копія того ж коду для єдиного формату здачі.
+
+Дві Lambda-функції (`validate.py`, `log_metrics.py`) розгорнуті через Terraform разом зі Step Function `ValidateData → LogMetrics`. GitLab CI job `train-model` запускає Step Function через `aws stepfunctions start-execution` після кожного `push`.
+
+Повні інструкції (створення Lambda-архівів, `terraform apply`, ручний запуск Step Function, змінні CI/CD, приклад JSON) — у [mlops-train-automation/README.md](mlops-train-automation/README.md).
+
+![Успішний job train-model у GitLab CI](img/19.png)
