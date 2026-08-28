@@ -23,9 +23,9 @@ variable "cluster_version" {
 }
 
 variable "cpu_instance_types" {
-  description = "Instance types for the CPU node group. t3.small used instead of t3.micro because t3.micro's 4-pod-per-node ENI limit is fully consumed by system daemonsets (aws-node, coredns x2, kube-proxy), leaving no room to schedule workload pods."
+  description = "Instance types for the CPU node group. t3.medium is blocked by this AWS account's Free Tier restriction (InvalidParameterCombination); m7i-flex.large (8GB RAM, 2 vCPU) is free-tier-eligible per `aws ec2 describe-instance-types --filters Name=free-tier-eligible,Values=true` and has enough memory for Argo CD + MLflow + MinIO without kubelet MemoryPressure."
   type        = list(string)
-  default     = ["t3.small"]
+  default     = ["m7i-flex.large"]
 }
 
 variable "gpu_instance_types" {
