@@ -70,3 +70,66 @@ kubectl -n application port-forward deployment/demo-nginx 8081:80
 ## Скріншоти
 
 Скріншоти виконання команд (`terraform init`/`apply`, перевірка `kubectl`, доступ до nginx у браузері) — у директорії [`img/`](img/).
+
+## ДЗ 4: Трекінг ML-експериментів (MLflow + PushGateway + Grafana)
+
+MLflow, MinIO, PostgreSQL, Prometheus PushGateway та `kube-prometheus-stack` (Prometheus + Grafana) розгорнуті через ArgoCD як окремі `Application` (app-of-apps, [goit-MLOps-argo/argocd/applications/](https://github.com/rubannn/goit-MLOps-argo/tree/main/argocd/applications)). Скрипт [experiments/train_and_push.py](experiments/train_and_push.py) тренує кілька моделей `LogisticRegression` на датасеті Iris із різними параметрами, логує їх у MLflow і пушить метрики `mlflow_accuracy`/`mlflow_loss` у PushGateway.
+
+### Як запустити `train_and_push.py`
+
+```bash
+cd experiments
+pip install -r requirements.txt
+```
+
+Скопіювати `.env.example` в `.env` (значення вже підходять для типового `port-forward`, наведеного нижче):
+
+```bash
+cp .env.example .env
+python train_and_push.py
+```
+
+Після завершення найкраща модель зберігається в `experiments/best_model/`.
+
+### Як перевірити наявність MLflow і PushGateway у кластері
+
+```bash
+kubectl get applications -n infra-tools
+kubectl get pods -n mlflow
+kubectl get pods -n monitoring
+```
+
+Мають бути `Application`-и `minio`, `postgres`, `mlflow`, `pushgateway`, `monitoring-stack` зі статусом `Synced`/`Healthy`, і відповідні pod-и в статусі `Running`.
+
+### Port-forward
+
+Для запуску `train_and_push.py` потрібні одразу 3 проброшених порти (в окремих терміналах):
+
+```bash
+kubectl -n mlflow port-forward svc/mlflow 5000:5000
+kubectl -n monitoring port-forward svc/pushgateway-prometheus-pushgateway 9091:9091
+kubectl -n mlflow port-forward svc/minio 9000:9000
+```
+
+`http://localhost:5000` — MLflow UI, `http://localhost:9091` — PushGateway.
+
+### Як подивитись метрики в Grafana
+
+```bash
+kubectl -n monitoring port-forward svc/monitoring-stack-grafana 3001:80
+kubectl get secret monitoring-stack-grafana -n monitoring -o jsonpath='{.data.admin-password}' | base64 -d
+```
+
+Відкрити `http://localhost:3001`, логін `admin` і пароль з команди вище. Ліворуч **Explore** → datasource **Prometheus** → запит `mlflow_accuracy` або `mlflow_loss`.
+
+### Скріншоти
+
+| # | Що зображено |
+|---|---|
+| [11](img/11.png) | MLflow UI — головна сторінка |
+| [12](img/12.png) | PushGateway — сторінка Status |
+| [13](img/13.png), [14](img/14.png) | MLflow — деталі окремих runs |
+| [15](img/15.png) | Термінал: повний вивід `train_and_push.py` (8 runs, найкраща модель знайдена) |
+| [16](img/16.png) | PushGateway — сторінка Metrics (`mlflow_accuracy`/`mlflow_loss` по всіх runs) |
+| [17](img/17.png) | Grafana → Explore → Prometheus — `mlflow_accuracy` |
+| [18](img/18.png) | Grafana → Explore → Prometheus — `mlflow_loss` |
