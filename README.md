@@ -75,7 +75,7 @@ kubectl -n application port-forward deployment/demo-nginx 8081:80
 
 MLflow, MinIO, PostgreSQL, Prometheus PushGateway та `kube-prometheus-stack` (Prometheus + Grafana) розгорнуті через ArgoCD як окремі `Application` (app-of-apps, [goit-MLOps-argo/argocd/applications/](https://github.com/rubannn/goit-MLOps-argo/tree/main/argocd/applications)). Скрипт [experiments/train_and_push.py](experiments/train_and_push.py) тренує кілька моделей `LogisticRegression` на датасеті Iris із різними параметрами, логує їх у MLflow і пушить метрики `mlflow_accuracy`/`mlflow_loss` у PushGateway.
 
-### Як запустити `train_and_push.py`
+### Запуск `train_and_push.py`
 
 ```bash
 cd experiments
@@ -91,7 +91,7 @@ python train_and_push.py
 
 Після завершення найкраща модель зберігається в `experiments/best_model/`.
 
-### Як перевірити наявність MLflow і PushGateway у кластері
+### Перевірка наявності MLflow і PushGateway у кластері
 
 ```bash
 kubectl get applications -n infra-tools
@@ -113,7 +113,7 @@ kubectl -n mlflow port-forward svc/minio 9000:9000
 
 `http://localhost:5000` — MLflow UI, `http://localhost:9091` — PushGateway.
 
-### Як подивитись метрики в Grafana
+### Перегляд метрик у Grafana
 
 ```bash
 kubectl -n monitoring port-forward svc/monitoring-stack-grafana 3001:80
