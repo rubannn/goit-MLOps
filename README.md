@@ -6,6 +6,6 @@
 
 ДЗ 3: [lesson-7 branch](https://github.com/rubannn/goit-MLOps/tree/lesson-7)
 
-ДЗ 4: [lesson-7 branch](https://github.com/rubannn/goit-MLOps/tree/lesson-9)
+ДЗ 4: [lesson-9 branch](https://github.com/rubannn/goit-MLOps/tree/lesson-9)
 
-ДЗ 5: [lesson-7 branch](https://github.com/rubannn/goit-MLOps/tree/lesson-10)
+ДЗ 5: [lesson-10 branch](https://github.com/rubannn/goit-MLOps/tree/lesson-10)
