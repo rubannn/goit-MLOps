@@ -9,11 +9,14 @@ from itertools import product
 
 import mlflow
 import mlflow.sklearn
+from dotenv import load_dotenv
 from prometheus_client import CollectorRegistry, Gauge, push_to_gateway
 from sklearn.datasets import load_iris
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, log_loss
 from sklearn.model_selection import train_test_split
+
+load_dotenv()
 
 MLFLOW_TRACKING_URI = os.environ.get("MLFLOW_TRACKING_URI", "http://localhost:5000")
 PUSHGATEWAY_URL = os.environ.get("PUSHGATEWAY_URL", "http://localhost:9091")
